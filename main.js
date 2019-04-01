@@ -12,6 +12,24 @@ let curTool = 'pen';
 
 
 bindEvents = () => {
+  if (isMobile()) {
+    bindTouchEvents();
+  } else {
+    bindMouseEvents();
+  }
+
+
+  $('#eraser').click((event) => {
+    if (curTool != 'eraser') curTool = 'eraser';
+  });
+  $('#pen').click((event) => {
+    if (curTool != 'pen') curTool = 'pen';
+  });
+
+  $(window).resize((event) => accustomCanvas());
+};
+
+bindMouseEvents = () => {
   $(canvas).on('mousedown', (event) => {
     x = event.clientX;
     y = event.clientY;
@@ -43,15 +61,37 @@ bindEvents = () => {
   $(canvas).on('mouseenter', (event) => {
     setLastPoint(event.clientX, event.clientY);
   });
+};
 
-  $('#eraser').click((event) => {
-    if (curTool != 'eraser') curTool = 'eraser';
-  });
-  $('#pen').click((event) => {
-    if (curTool != 'pen') curTool = 'pen';
+bindTouchEvents = () => {
+  $(canvas).on('touchstart', (event) => {
+    x = event.touches[0].clientX;
+    y = event.touches[0].clientY;
+    mouseDown = true;
+    if (curTool === 'eraser') {
+      ctx.clearRect(x, y, 10, 10);
+    } else if (curTool === 'pen'){
+      drawPoint(x, y);
+      setLastPoint(x, y);
+    }
   });
 
-  $(window).resize((event) => accustomCanvas());
+  $(canvas).on('touchmove', (event) => {
+    event.preventDefault();
+    if (!mouseDown) return;
+    x = event.touches[0].clientX;
+    y = event.touches[0].clientY;
+    if (curTool === 'eraser') {
+      ctx.clearRect(x, y, 10, 10);
+    } else if (curTool === 'pen') {
+      drawLine(x, y, lastPoint.x, lastPoint.y);
+      setLastPoint(x, y);
+    }
+  });
+
+  $(canvas).on('touched', (event) => {
+    mouseDown = false;
+  });
 };
 
 
@@ -79,9 +119,10 @@ setLastPoint = (x, y) => {
   lastPoint.y = y;
 };
 
+isMobile = () => {
+  return ('ontouchstart' in document.documentElement);
+};
+
+
 bindEvents();
 accustomCanvas();
-
-console.log(x);
-var x = 1;
-console.log(x);
