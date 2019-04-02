@@ -11,6 +11,10 @@ li, ul, ol {
   list-style: none;
 }
 
+ul.color > li, svg {
+  cursor: pointer;
+}
+
 .icon {
   width: 1.5em;
   height: 1.5em;
@@ -51,22 +55,18 @@ li, ul, ol {
   transition: all 0.3s;
 }
 
-#red {
-  background: red;
-}
-
-#yellow {
-  background: yellow;
-}
-
-#green {
-  background: green;
-}
-
-#black {
-  background: black;
-}
-
 .color .selected {
   transform: scale(1.2);
+}
+
+.color input {
+  height: 20px;
+  width: 20px;
+  display: none;
+}
+
+.color:last-child #plus {
+  width: 20px;
+  height: 20px;
+  padding: 0;
 }

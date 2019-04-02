@@ -4,16 +4,25 @@ const lastPoint = {
   'x': 0,
   'y': 0
 };
+const backGroundColor = 'white';
 
 let mouseDown = false;
 // enum Tool = ['pen', 'eraser'];
 let curTool = 'pen';
 
 
+setBgColor = (color) => {
+  let tmpColor = ctx.fillStyle;
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = tmpColor;
+}
+
 
 bindEvents = () => {
   if (isMobile()) {
     bindTouchEvents();
+    $('#accustomColor').hide();
   } else {
     bindMouseEvents();
   }
@@ -30,17 +39,52 @@ bindEvents = () => {
     $('#eraser').removeClass('selected');
   });
 
+  $('#clear').click((event) => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setBgColor(backGroundColor);
+  });
 
+  $('#download').click((event) => {
+    let $a = $('<a>');
+    $a.attr('href', canvas.toDataURL("image/jpg"));
+    $a.attr('download', 'design');
+    $('body').append($a);
+    $a[0].click();
+  });
+
+  // 初始化color
+  $('.color').children('li').each((index, color) => {
+    $(color).css('background', $(color).attr('color'));
+  });
 
   $('.color').children('li').each((index, color) => {
     $(color).click((event) => {
       $(color).addClass('selected');
-      ctx.strokeStyle = $(color).attr('id');
-      ctx.fillStyle = $(color).attr('id');
+      ctx.strokeStyle = $(color).attr('color');
+      ctx.fillStyle = $(color).attr('color');
       $(color).siblings().each((index, otherColor) => {
         $(otherColor).removeClass('selected');
       });
     });
+  });
+
+  let $varColor = $('li[color="white"]');
+  let colorSelector = $('li[color="white"] input');
+  $varColor.click((event) => {
+    colorSelector[0].click();
+  });
+  colorSelector.on('change', (event) => {
+    let newColor = event.target.value;
+    $varColor.attr('color', newColor);
+
+    $varColor.addClass('selected');
+    ctx.strokeStyle = $varColor.attr('color');
+    ctx.fillStyle = $varColor.attr('color');
+    $varColor.siblings().each((index, otherColor) => {
+      $(otherColor).removeClass('selected');
+    });
+    $varColor.css('background', newColor);
+
   });
 
   $(window).resize((event) => accustomCanvas());
@@ -81,6 +125,10 @@ bindMouseEvents = () => {
 };
 
 bindTouchEvents = () => {
+  $('body').on('touchstart', (event) => {
+    event.preventDefault();
+  });
+
   $(canvas).on('touchstart', (event) => {
     x = event.touches[0].clientX;
     y = event.touches[0].clientY;
@@ -140,6 +188,7 @@ isMobile = () => {
   return ('ontouchstart' in document.documentElement);
 };
 
-
+accustomCanvas();
+setBgColor(backGroundColor);
 bindEvents();
 accustomCanvas();

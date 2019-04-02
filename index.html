@@ -12,17 +12,31 @@
   <body>
     <canvas id="canvas" width="300" height="300"></canvas>
     <div class="toolBar">
-      <svg id="pen" class="icon" aria-hidden="true">
+      <svg id="pen" class="icon selected" aria-hidden="true">
         <use xlink:href="#icon-Pen"></use>
       </svg>
-      <svg id="eraser" class="icon selected" aria-hidden="true">
+      <svg id="eraser" class="icon" aria-hidden="true">
         <use xlink:href="#icon-eraser"></use>
       </svg>
+      <svg id="clear" class="icon" aria-hidden="true">
+        <use xlink:href="#icon-clear"></use>
+      </svg>
+      <svg id="download" class="icon" aria-hidden="true">
+        <a href="">
+          <use xlink:href="#icon-download"></use>
+        </a>
+      </svg>
       <ul class="color">
-        <li id="black" class="selected"></li>
-        <li id="red"></li>
-        <li id="yellow"></li>
-        <li id="green"></li>
+        <li color="black" class="selected"></li>
+        <li color="red"></li>
+        <li color="yellow"></li>
+        <li color="green"></li>
+        <li color="white">
+          <svg id="plus" class="icon" aria-hidden="true">
+            <use xlink:href="#icon-PLUS"></use>
+          </svg>
+          <input type="color" value="#2D9900"/>
+        </li>
       </ul>
     </div>
 
