@@ -21,9 +21,26 @@ bindEvents = () => {
 
   $('#eraser').click((event) => {
     if (curTool != 'eraser') curTool = 'eraser';
+    $('#eraser').addClass('selected');
+    $('#pen').removeClass('selected');
   });
   $('#pen').click((event) => {
     if (curTool != 'pen') curTool = 'pen';
+    $('#pen').addClass('selected');
+    $('#eraser').removeClass('selected');
+  });
+
+
+
+  $('.color').children('li').each((index, color) => {
+    $(color).click((event) => {
+      $(color).addClass('selected');
+      ctx.strokeStyle = $(color).attr('id');
+      ctx.fillStyle = $(color).attr('id');
+      $(color).siblings().each((index, otherColor) => {
+        $(otherColor).removeClass('selected');
+      });
+    });
   });
 
   $(window).resize((event) => accustomCanvas());
@@ -37,7 +54,7 @@ bindMouseEvents = () => {
     if (curTool === 'eraser') {
       ctx.clearRect(x, y, 10, 10);
     } else if (curTool === 'pen'){
-      drawPoint(x, y);
+      // drawPoint(x, y);
       setLastPoint(x, y);
     }
   });
@@ -71,7 +88,7 @@ bindTouchEvents = () => {
     if (curTool === 'eraser') {
       ctx.clearRect(x, y, 10, 10);
     } else if (curTool === 'pen'){
-      drawPoint(x, y);
+      // drawPoint(x, y);
       setLastPoint(x, y);
     }
   });

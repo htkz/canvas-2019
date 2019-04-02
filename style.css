@@ -3,12 +3,66 @@
   padding: 0;
 }
 
+li, ul, ol {
+  list-style: none;
+}
+
+.icon {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+  padding: 5px;
+  transition: transform 0.3s;
+}
+
+.icon.selected {
+  fill: red;
+  transform: scale(1.1);
+}
+
+
 #canvas {
-  border: 1px solid red;
 }
 
 .toolBar {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
+  display: flex;
+}
+
+.color {
+  display: flex;
+  align-items: center;
+}
+
+.color li {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  margin: 0 8px;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+
+#red {
+  background: red;
+}
+
+#yellow {
+  background: yellow;
+}
+
+#green {
+  background: green;
+}
+
+#black {
+  background: black;
+}
+
+.color .selected {
+  transform: scale(1.2);
 }
