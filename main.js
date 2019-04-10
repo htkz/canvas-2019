@@ -11,12 +11,12 @@ let mouseDown = false;
 let curTool = 'pen';
 
 
-setBgColor = (color) => {
-  let tmpColor = ctx.fillStyle;
-  ctx.fillStyle = color;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = tmpColor;
-}
+// setBgColor = (color) => {
+//   let tmpColor = ctx.fillStyle;
+//   ctx.fillStyle = color;
+//   ctx.fillRect(0, 0, canvas.width, canvas.height);
+//   ctx.fillStyle = tmpColor;
+// }
 
 
 bindEvents = () => {
@@ -41,16 +41,17 @@ bindEvents = () => {
 
   $('#clear').click((event) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    setBgColor(backGroundColor);
+    // setBgColor(backGroundColor);
   });
 
   $('#download').click((event) => {
-    let $a = $('<a>');
+    let $a = $('#downloadLink');
     $a.attr('href', canvas.toDataURL("image/jpg"));
-    $a.attr('download', 'design');
-    $('body').append($a);
     $a[0].click();
+    // setBgColor(backGroundColor);
   });
+
+
 
   // 初始化color
   $('.color').children('li').each((index, color) => {
@@ -189,6 +190,6 @@ isMobile = () => {
 };
 
 accustomCanvas();
-setBgColor(backGroundColor);
 bindEvents();
 accustomCanvas();
+// setBgColor(backGroundColor);
